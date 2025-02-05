@@ -1,9 +1,9 @@
-import ColorGame from "@/components/ColorGame";
+import HomeComponent from "@/components/Home";
 
 export default function Home() {
   return (
     <>
-      <ColorGame />
+      <HomeComponent />
     </>
   );
 }

@@ -30,6 +30,12 @@ const ColorGame = () => {
   const { width, height } = useWindowSize();
   const isOutOfAttempts = attempts.length >= maxAttempts;
 
+  const gridItemVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.4 }
+  };
+
   useEffect(() => {
     return () => {
       setTimeout(() => {
@@ -39,9 +45,28 @@ const ColorGame = () => {
   }, [showConfetti, setShowConfetti]);
 
   return (
-    <div className=" relative min-w-full flex flex-col items-center justify-center px-6 text-gray-800 bg-[#f8f8ff] min-h-screen overflow-hidden">
-      {showConfetti && <Confetti width={width} height={height} />}
-      <div className="absolute top-0 left-0 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 shadow-md py-4 rounded-lg">
+    <motion.div
+      className="relative min-w-full flex flex-col items-center justify-center text-gray-800 bg-[#f8f8ff] min-h-screen overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      {showConfetti && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Confetti width={width} height={height} />
+        </motion.div>
+      )}
+
+      <motion.div
+        className="absolute top-0 left-0 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 shadow-md py-4 rounded-lg"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
         <motion.div
           className=" gameInstructions flex items-center justify-start overflow-hidden whitespace-nowrap space-x-8 px-4"
           animate={{ x: ["100%", "-100%"] }}
@@ -135,36 +160,58 @@ const ColorGame = () => {
             </motion.p>
           </div>
         </motion.div>
-      </div>
-      {/* Game Status */}
-      <div
-        className=" mt-20 gameStatus text-center my-4 text-lg font-medium"
+      </motion.div>
+
+      <motion.div
+        className="mt-20 gameStatus text-center my-4 text-lg font-medium"
         data-testid="gameStatus"
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
       >
         {gameStatus}
-      </div>
-      {/* Progress Bar */}
+      </motion.div>
+
       <Progress
         value={(attempts.length / maxAttempts) * 100}
         max={maxAttempts}
         className="my-5 bg-gray-200"
       />
+
       <div className="flex flex-col w-full h-full gap-5">
-        <ColorBox bgColor={targetColor} isRevealed={isRevealed} />
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <ColorBox bgColor={targetColor} isRevealed={isRevealed} />
+        </motion.div>
 
         <div className="grid grid-cols-3 gap-2 mb-6 justify-center place-items-center">
-          {colors.map((color) => (
-            <ColorOptionButton
+          {colors.map((color, index) => (
+            <motion.div
               key={color}
-              color={color}
-              onClick={() => handleGuess(color)}
-              disabled={isOutOfAttempts}
-              className="border border-gray-500 hover:border-gray-700 transition"
-            />
+              variants={gridItemVariants}
+              initial="initial"
+              animate="animate"
+              transition={{
+                ...gridItemVariants.transition,
+                delay: index * 0.2
+              }}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.1 }}
+            >
+              <ColorOptionButton
+                color={color}
+                onClick={() => handleGuess(color)}
+                disabled={isOutOfAttempts}
+                className="border border-gray-500 hover:border-gray-700 transition"
+              />
+            </motion.div>
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -14,10 +14,10 @@ const ColorBox = ({ bgColor, isRevealed }: ColorBoxProps) => {
     <motion.div
       data-testid="colorBox"
       className="colorBox w-full h-[300px] border-2 border-gray-400 rounded-lg flex items-center justify-center overflow-hidden relative"
-      layout // Enables FLIP animation
+      layout
       initial={{ rotateY: 0, scale: 0.8, opacity: 0.5 }}
       animate={{
-        rotateY: isRevealed ? 180 : 0, // Creates a flip effect
+        rotateY: isRevealed ? 180 : 0,
         scale: isRevealed ? 1 : 0.9,
         opacity: 1
       }}
@@ -28,8 +28,8 @@ const ColorBox = ({ bgColor, isRevealed }: ColorBoxProps) => {
       }}
       style={{
         backgroundImage: 'url("/icons/logo.svg")',
-        backgroundSize: "cover", // Ensure the background image covers the entire box
-        backgroundPosition: "center" // Center the background image
+        backgroundSize: "cover",
+        backgroundPosition: "center"
       }}
     >
       {/* Glassmorphism overlay */}
@@ -55,18 +55,18 @@ const ColorBox = ({ bgColor, isRevealed }: ColorBoxProps) => {
               Guess the right color to reveal the color
             </motion.p>
             <motion.img
-              src="/icons/logo.svg" // Path to your SVG file
+              src="/icons/logo.svg"
               alt="Moving Icon"
               className="mt-4 w-[50px] h-[50px] mx-auto"
               animate={{
-                y: ["0px", "-10px", "0px", "5px", "0px"], // Bounce up and down
-                rotate: [0, 180, 360, 180, 0] // Flip the logo at intervals
+                y: ["0px", "-10px", "0px", "5px", "0px"],
+                rotate: [0, 180, 360, 180, 0]
               }}
               transition={{
-                duration: 2, // Duration of one complete cycle
-                repeat: Infinity, // Repeat the animation infinitely
-                ease: "easeInOut", // Smooth easing for the movement
-                repeatDelay: 0.5 // Add a slight delay before repeating the animation
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                repeatDelay: 0.5
               }}
             />
             <motion.p

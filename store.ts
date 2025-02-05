@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { toast } from "sonner";
 
-// Define types for the game state and history
 interface GameSession {
   session: number;
   targetColor: string;
@@ -72,7 +71,6 @@ const outOfAttemptsMessages = [
   "Better Luck Next Time!"
 ];
 
-// Function to randomly select a message from an array
 function getRandomMessage(messages: string[]) {
   return messages[Math.floor(Math.random() * messages.length)];
 }
@@ -90,7 +88,7 @@ const initialColors = [
   "#27AE60",
   "#F1C40F",
   "#D35400"
-]; // Example colors
+];
 
 const shuffleColors = (colors: string[]) => {
   const shuffled = [...colors];
@@ -198,7 +196,6 @@ const useColorGameStore = create<ColorGameState>()(
             };
           }
         }
-        console.log(history);
         set({ history: newHistory });
       },
 
@@ -222,12 +219,12 @@ const useColorGameStore = create<ColorGameState>()(
           colors: newColors,
           targetColor: newColors[Math.floor(Math.random() * newColors.length)],
           game: state.game + 1,
-          session: 1, // Reset session to 1 for the new game
+          session: 1,
           score: 0,
           gameStatus: getRandomMessage(startMessages),
           isRevealed: false,
           attempts: [],
-          // Preserve the history of previous games
+
           history: [...state.history]
         }));
         toast.info("New game started!");
@@ -274,8 +271,8 @@ const useColorGameStore = create<ColorGameState>()(
       }
     }),
     {
-      name: "color-game-storage", // unique name for localStorage key
-      storage: createJSONStorage(() => localStorage) // specify localStorage as the storage
+      name: "color-game-storage",
+      storage: createJSONStorage(() => localStorage)
     }
   )
 );

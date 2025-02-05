@@ -21,7 +21,7 @@ const ColorOptionButton = ({
     <motion.div
       className={cn(`
         w-16 h-16 rounded-full shadow-md flex items-center justify-center relative overflow-hidden ${className}`)}
-      whileHover={{ scale: 1.1 }} // Scale effect on hover
+      whileHover={{ scale: 1.1 }}
       transition={{ duration: 0.3 }}
     >
       <Button

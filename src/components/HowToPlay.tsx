@@ -39,7 +39,7 @@ const instructions = [
 
 const HowToPlay = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gradient-to-b from-indigo-500 to-purple-600 text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-gradient-to-b from-indigo-500 to-purple-600 text-white">
       {/* Title */}
       <motion.h1
         className="text-3xl font-bold mb-6 text-center"
@@ -52,7 +52,7 @@ const HowToPlay = () => {
 
       {/* Instructions List */}
       <motion.ol
-        className="bg-white/20 p-6 rounded-lg shadow-md backdrop-blur-md w-full max-w-lg list-decimal list-inside space-y-4"
+        className="bg-white/20 p-4 rounded-lg shadow-md backdrop-blur-md w-full max-w-lg list-decimal list-inside space-y-4"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
