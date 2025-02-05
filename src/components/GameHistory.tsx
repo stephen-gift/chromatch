@@ -59,7 +59,9 @@ const GameHistory = () => {
       >
         <div className="flex justify-between items-center p-4 w-full">
           <h2 className="text-lg font-semibold sm:text-xl">Game History</h2>
-          <ClearButtonWithConfirmation clearStore={clearStore} />
+          {history.length > 0 && (
+            <ClearButtonWithConfirmation clearStore={clearStore} />
+          )}
         </div>
       </motion.div>
       {isLoading ? (
