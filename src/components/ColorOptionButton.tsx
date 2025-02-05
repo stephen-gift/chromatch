@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { playClickSound } from "@/lib/sound";
 
 interface ColorOptionButtonProps {
   color: string;
@@ -17,6 +18,10 @@ const ColorOptionButton = ({
   disabled,
   className
 }: ColorOptionButtonProps) => {
+  const handleClick = () => {
+    onClick(color);
+    playClickSound();
+  };
   return (
     <motion.div
       className={cn(`
@@ -27,7 +32,7 @@ const ColorOptionButton = ({
       <Button
         className="colorOption w-full h-full rounded-full flex items-center justify-center"
         style={{ backgroundColor: color }}
-        onClick={() => onClick(color)}
+        onClick={handleClick}
         disabled={!!disabled}
         data-testid="colorOption"
       >

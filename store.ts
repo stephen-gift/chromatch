@@ -407,3 +407,27 @@ const useColorGameStore = create<ColorGameState>()(
 );
 
 export default useColorGameStore;
+
+interface SoundState {
+  isMusicMuted: boolean;
+  isClickMuted: boolean;
+  toggleMusicMute: () => void;
+  toggleClickMute: () => void;
+}
+
+export const useSoundStore = create<SoundState>()(
+  persist(
+    (set) => ({
+      isMusicMuted: false,
+      isClickMuted: false,
+      toggleMusicMute: () =>
+        set((state) => ({ isMusicMuted: !state.isMusicMuted })),
+      toggleClickMute: () =>
+        set((state) => ({ isClickMuted: !state.isClickMuted }))
+    }),
+    {
+      name: "sound-storage",
+      storage: createJSONStorage(() => localStorage)
+    }
+  )
+);

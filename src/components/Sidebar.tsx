@@ -6,7 +6,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Avatar, AvatarFallback } from "../components/ui/avatar";
-import useColorGameStore from "../../store";
+import useColorGameStore, { useSoundStore } from "../../store";
+import { Switch } from "../components/ui/switch"; // Import the shadcn Switch
+import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 const adminSideBarLinks = [
   {
@@ -46,8 +49,9 @@ const linkVariants = {
 
 const Sidebar = () => {
   const pathname = usePathname();
-
   const { attempts, maxAttempts, score, game, session } = useColorGameStore();
+  const { isMusicMuted, isClickMuted, toggleMusicMute, toggleClickMute } =
+    useSoundStore();
 
   return (
     <motion.div
@@ -60,7 +64,7 @@ const Sidebar = () => {
       <div>
         {/* Logo Section */}
         <motion.div
-          className="flex flex-row items-center gap-2 border-b border-dashed border-blue-900/20 pb-10 max-md:justify-center"
+          className="flex flex-row items-center gap-2 border-b border-dashed border-blue-900/20 pb-5 max-md:justify-center"
           variants={sectionVariants}
           initial="initial"
           animate="animate"
@@ -74,7 +78,7 @@ const Sidebar = () => {
 
         {/* Sidebar Links */}
         <motion.div
-          className="flex mt-10 flex-col gap-5"
+          className="flex mt-5 flex-col gap-2"
           variants={sectionVariants}
           initial="initial"
           animate="animate"
@@ -82,7 +86,7 @@ const Sidebar = () => {
         >
           {adminSideBarLinks.map((link, index) => {
             const isSelected =
-              (link.route !== "/admin" &&
+              (link.route !== "/" &&
                 pathname.includes(link.route) &&
                 link.route.length > 1) ||
               pathname === link.route;
@@ -130,9 +134,9 @@ const Sidebar = () => {
       </div>
 
       {/* Stats Section */}
-      {!pathname.includes("/history") && (
+      {!["/history", "/how-to-play"].includes(pathname) && (
         <motion.div
-          className="mt-10 w-full rounded-lg bg-white shadow-md"
+          className="mt-5 w-full rounded-lg bg-white shadow-md"
           variants={sectionVariants}
           initial="initial"
           animate="animate"
@@ -164,13 +168,42 @@ const Sidebar = () => {
         </motion.div>
       )}
 
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="mt-5 w-full">
+            Sounds
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogTitle>Sound Settings</DialogTitle>
+          <div className="p-6">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Music</span>
+                <Switch
+                  checked={!isMusicMuted}
+                  onCheckedChange={toggleMusicMute}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Click Sounds</span>
+                <Switch
+                  checked={!isClickMuted}
+                  onCheckedChange={toggleClickMute}
+                />
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Avatar Section */}
       <motion.div
-        className="my-8 flex w-full flex-row gap-2 justify-start items-center rounded-full border border-light-400 px-6 py-2 shadow-sm max-md:px-2"
+        className="my-3 flex w-full flex-row gap-2 justify-start items-center rounded-full border border-light-400 px-6 py-2 shadow-sm max-md:px-2"
         variants={sectionVariants}
         initial="initial"
         animate="animate"
-        transition={{ duration: 0.5, delay: 1.0 }}
+        transition={{ duration: 0.5, delay: 1.2 }}
       >
         <Avatar>
           <AvatarFallback className="bg-amber-100">G</AvatarFallback>
