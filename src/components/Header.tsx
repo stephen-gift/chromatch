@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useColorGameStore from "../../store";
 import { Button } from "./ui/button";
 import { HelpCircle } from "lucide-react";
@@ -8,6 +8,7 @@ import { HelpCircle } from "lucide-react";
 const Header = () => {
   const { startNewGame } = useColorGameStore();
   const pathname = usePathname();
+  const router = useRouter();
   return (
     <header className="flex lg:items-end items-start justify-between  flex-row gap-5 sm:mb-10 mb-5">
       <div>
@@ -16,7 +17,7 @@ const Header = () => {
 
       {/* New Game Button */}
       <div className="flex justify-center items-center gap-4">
-        {!pathname.includes("/history") && (
+        {!["/history", "/how-to-play"].includes(pathname) && (
           <Button
             onClick={startNewGame}
             className="newGameButton px-6 py-3 bg-red-600 text-white font-bold rounded-lg shadow-md hover:bg-red-700 transition-all duration-300"
@@ -25,7 +26,7 @@ const Header = () => {
             New Game
           </Button>
         )}
-        <Button>
+        <Button onClick={() => router.push("/how-to-play")}>
           <HelpCircle />
         </Button>
       </div>

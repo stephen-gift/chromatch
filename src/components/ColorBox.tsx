@@ -69,7 +69,16 @@ const ColorBox = ({ bgColor, isRevealed }: ColorBoxProps) => {
                 repeatDelay: 0.5 // Add a slight delay before repeating the animation
               }}
             />
-            <p>{gameStatus}</p>
+            <motion.p
+              className="text-center font-bold text-xl text-gray-600 sm:text-2xl md:text-3xl lg:text-4xl"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
+              data-testid="gameStatus"
+            >
+              {gameStatus}
+            </motion.p>
           </motion.div>
         ) : (
           <motion.div

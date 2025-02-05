@@ -138,7 +138,7 @@ const ColorGame = () => {
       </div>
       {/* Game Status */}
       <div
-        className=" gameStatus text-center my-4 text-lg font-medium"
+        className=" mt-20 gameStatus text-center my-4 text-lg font-medium"
         data-testid="gameStatus"
       >
         {gameStatus}
