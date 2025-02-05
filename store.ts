@@ -144,7 +144,26 @@ const useColorGameStore = create<ColorGameState>()(
           });
           get().updateHistory(true, newAttempts);
           toast.success(
-            "Correct! You guessed the right color! Let's start a new session..."
+            "Correct! You guessed the right color! Let's start a new session...",
+            {
+              duration: 4000,
+              position: "top-right",
+              dismissible: true,
+              style: {
+                background: "#22C55E",
+                color: "#FFF",
+                borderRadius: "8px",
+                padding: "16px",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+              },
+              classNames: {
+                toast:
+                  "bg-green-500 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+                title: "text-lg font-bold",
+                description: "text-sm text-gray-100",
+                closeButton: "text-white hover:text-gray-300"
+              }
+            }
           );
 
           setTimeout(() => {
@@ -158,11 +177,49 @@ const useColorGameStore = create<ColorGameState>()(
               targetColor
             )
           });
-          toast.error(`Out of attempts! Starting a new session...`);
+          toast.error("Out of attempts! Starting a new session...", {
+            duration: 5000,
+            position: "top-right",
+            dismissible: true,
+            style: {
+              background: "#FF4D4D",
+              color: "#FFF",
+              fontWeight: "normal",
+              borderRadius: "8px",
+              padding: "16px",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+            },
+            classNames: {
+              toast:
+                "bg-red-600 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+              title: "text-lg font-bold",
+              description: "text-sm text-gray-100",
+              closeButton: "text-white hover:text-gray-300"
+            }
+          });
           setTimeout(() => get().startNewSession(), 2000);
         } else {
           set({ gameStatus: getRandomMessage(incorrectGuessMessages) });
-          toast.warning("Incorrect guess! Try again.");
+          toast.warning("Incorrect guess! Try again.", {
+            duration: 4000,
+            position: "top-right",
+            dismissible: true,
+            style: {
+              background: "#FFA500",
+              color: "#FFF",
+              fontWeight: "normal",
+              borderRadius: "8px",
+              padding: "16px",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+            },
+            classNames: {
+              toast:
+                "bg-orange-500 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+              title: "text-lg font-bold",
+              description: "text-sm text-gray-100",
+              closeButton: "text-white hover:text-gray-300"
+            }
+          });
         }
       },
 
@@ -227,7 +284,25 @@ const useColorGameStore = create<ColorGameState>()(
 
           history: [...state.history]
         }));
-        toast.info("New game started!");
+        toast.info("New game started!", {
+          duration: 4000,
+          position: "top-right",
+          dismissible: true,
+          style: {
+            background: "#3B82F6",
+            color: "#FFF",
+            borderRadius: "8px",
+            padding: "16px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+          },
+          classNames: {
+            toast:
+              "bg-blue-500 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+            title: "text-lg font-bold",
+            description: "text-sm text-gray-100",
+            closeButton: "text-white hover:text-gray-300"
+          }
+        });
       },
 
       deleteSession: (gameNumber, sessionNumber) => {
@@ -244,14 +319,50 @@ const useColorGameStore = create<ColorGameState>()(
             return game;
           })
         }));
-        toast.warning(`Session ${sessionNumber} deleted.`);
+        toast.warning(`Session ${sessionNumber} deleted.`, {
+          duration: 4000,
+          position: "top-right",
+          dismissible: true,
+          style: {
+            background: "#F59E0B",
+            color: "#FFF",
+            borderRadius: "8px",
+            padding: "16px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+          },
+          classNames: {
+            toast:
+              "bg-yellow-500 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+            title: "text-lg font-bold",
+            description: "text-sm text-gray-100",
+            closeButton: "text-white hover:text-gray-300"
+          }
+        });
       },
 
       deleteGame: (gameNumber) => {
         set((state) => ({
           history: state.history.filter((game) => game.game !== gameNumber)
         }));
-        toast.error(`Game ${gameNumber} deleted.`);
+        toast.error(`Game ${gameNumber} deleted.`, {
+          duration: 4000,
+          position: "top-right",
+          dismissible: true,
+          style: {
+            background: "#DC2626",
+            color: "#FFF",
+            borderRadius: "8px",
+            padding: "16px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+          },
+          classNames: {
+            toast:
+              "bg-red-600 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+            title: "text-lg font-bold",
+            description: "text-sm text-gray-100",
+            closeButton: "text-white hover:text-gray-300"
+          }
+        });
       },
 
       clearStore: () => {
@@ -267,7 +378,25 @@ const useColorGameStore = create<ColorGameState>()(
           game: 1,
           history: []
         });
-        toast.info("Store cleared. Starting fresh!");
+        toast.info("Store cleared. Starting fresh!", {
+          duration: 4000,
+          position: "top-right",
+          dismissible: true,
+          style: {
+            background: "#3B82F6",
+            color: "#FFF",
+            borderRadius: "8px",
+            padding: "16px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+          },
+          classNames: {
+            toast:
+              "bg-blue-500 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+            title: "text-lg font-bold",
+            description: "text-sm text-gray-100",
+            closeButton: "text-white hover:text-gray-300"
+          }
+        });
       }
     }),
     {
