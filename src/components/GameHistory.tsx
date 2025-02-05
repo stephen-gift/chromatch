@@ -20,6 +20,25 @@ import { motion } from "framer-motion";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger
+} from "./ui/drawer";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "./ui/dialog";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const GameHistory = () => {
   const router = useRouter();
@@ -40,9 +59,7 @@ const GameHistory = () => {
       >
         <div className="flex justify-between items-center p-4 w-full">
           <h2 className="text-lg font-semibold sm:text-xl">Game History</h2>
-          <Button variant="destructive" onClick={clearStore}>
-            Clear
-          </Button>
+          <ClearButtonWithConfirmation clearStore={clearStore} />
         </div>
       </motion.div>
       {isLoading ? (
@@ -209,7 +226,7 @@ const GameHistory = () => {
               transition={{ duration: 0.5, delay: 0.5 }}
             >
               <Button onClick={() => router.push("/")} variant={"secondary"}>
-                Play Now to Create Your Game History!
+                Play to Create History!
               </Button>
             </motion.div>
           </div>
@@ -220,3 +237,65 @@ const GameHistory = () => {
 };
 
 export default GameHistory;
+
+export function ClearButtonWithConfirmation({ clearStore }) {
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const handleClear = () => {
+    clearStore();
+    setOpen(false);
+  };
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button variant="destructive">Clear</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Clear Game History</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to clear your game history? This action
+              cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleClear}>
+              Confirm
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button variant="destructive">Clear</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Clear Game History</DrawerTitle>
+          <DrawerDescription>
+            Are you sure you want to clear your game history? This action cannot
+            be undone.
+          </DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
+          <Button variant="destructive" onClick={handleClear}>
+            Confirm
+          </Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
