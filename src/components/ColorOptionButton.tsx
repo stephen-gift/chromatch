@@ -18,10 +18,7 @@ const ColorOptionButton = ({
   disabled,
   className
 }: ColorOptionButtonProps) => {
-  const handleClick = () => {
-    onClick(color);
-    playClickSound();
-  };
+  
   return (
     <motion.div
       className={cn(`
@@ -32,7 +29,7 @@ const ColorOptionButton = ({
       <Button
         className="colorOption w-full h-full rounded-full flex items-center justify-center"
         style={{ backgroundColor: color }}
-        onClick={handleClick}
+        onClick={() => onClick(color)}
         disabled={!!disabled}
         data-testid="colorOption"
       >
