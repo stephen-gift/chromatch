@@ -3,7 +3,6 @@ import React from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { playClickSound } from "@/lib/sound";
 
 interface ColorOptionButtonProps {
   color: string;
