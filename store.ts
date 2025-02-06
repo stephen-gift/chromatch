@@ -425,7 +425,7 @@ const useColorGameStore = create<ColorGameState>()(
           }, 2000);
         } else {
           toast.warning(
-            `Hint can only be used once every 2 sessions! Next available in session ${nextAvailableSession}.`,
+            `Hint can only be used once every 3 sessions! Next available in session ${nextAvailableSession}.`,
             {
               duration: 4000,
               position: "top-right",
