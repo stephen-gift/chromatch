@@ -1,38 +1,31 @@
 import { Howl } from "howler";
 import { useSoundStore } from "../../store";
 
+const { isClickMuted, isMusicMuted, clickVolume, musicVolume } =
+  useSoundStore.getState();
+
 export const buttonClickSound = new Howl({
   src: ["/sounds/button-click.mp3"],
-  volume: 0.3
+  volume: clickVolume
 });
 
 export const backgroundMusic = new Howl({
   src: ["/sounds/background-music.mp3"],
   loop: true,
-  volume: 0.4,
-  onload: () => {
-    console.log("Background music loaded");
-  },
-  onloaderror: (id, error) => {
-    console.error("Background music load error:", error);
-  },
-  onplayerror: (id, error) => {
-    console.error("Background music play error:", error);
-  }
+  volume: musicVolume
 });
 
 export const successSound = new Howl({
   src: ["/sounds/success.wav"],
-  volume: 0.2
+  volume: clickVolume
 });
 
 export const errorSound = new Howl({
   src: ["/sounds/error.wav"],
-  volume: 0.2
+  volume: clickVolume
 });
 
 export const playClickSound = () => {
-  const { isClickMuted, clickVolume } = useSoundStore.getState();
   if (!isClickMuted) {
     buttonClickSound.volume(clickVolume);
     buttonClickSound.play();
@@ -40,7 +33,6 @@ export const playClickSound = () => {
 };
 
 export const playBackgroundMusic = () => {
-  const { isMusicMuted, musicVolume } = useSoundStore.getState();
   backgroundMusic.volume(musicVolume);
   if (!isMusicMuted) {
     backgroundMusic.play();
@@ -50,7 +42,6 @@ export const playBackgroundMusic = () => {
 };
 
 export const playSuccessSound = () => {
-  const { isClickMuted, clickVolume } = useSoundStore.getState();
   if (!isClickMuted) {
     successSound.volume(clickVolume);
     successSound.play();
@@ -58,7 +49,6 @@ export const playSuccessSound = () => {
 };
 
 export const playErrorSound = () => {
-  const { isClickMuted, clickVolume } = useSoundStore.getState();
   if (!isClickMuted) {
     errorSound.volume(clickVolume);
     errorSound.play();
