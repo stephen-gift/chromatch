@@ -40,6 +40,10 @@ import {
 } from "./ui/dialog";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
+interface ClearButtonWithConfirmationProps {
+  clearStore: () => void;
+}
+
 const GameHistory = () => {
   const router = useRouter();
   const { history, clearStore } = useColorGameStore();
@@ -240,7 +244,9 @@ const GameHistory = () => {
 
 export default GameHistory;
 
-export function ClearButtonWithConfirmation({ clearStore }) {
+export function ClearButtonWithConfirmation({
+  clearStore
+}: ClearButtonWithConfirmationProps) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
