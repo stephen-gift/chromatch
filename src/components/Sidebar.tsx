@@ -11,6 +11,7 @@ import { Switch } from "../components/ui/switch"; // Import the shadcn Switch
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Menu, X } from "lucide-react";
+import { Slider } from "./ui/slider";
 
 const adminSideBarLinks = [
   {
@@ -52,8 +53,16 @@ const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { attempts, maxAttempts, score, game, session } = useColorGameStore();
-  const { isMusicMuted, isClickMuted, toggleMusicMute, toggleClickMute } =
-    useSoundStore();
+  const {
+    isMusicMuted,
+    isClickMuted,
+    toggleMusicMute,
+    toggleClickMute,
+    clickVolume,
+    musicVolume,
+    setClickVolume,
+    setMusicVolume
+  } = useSoundStore();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -198,22 +207,45 @@ const Sidebar = () => {
           </DialogTrigger>
           <DialogContent>
             <DialogTitle>Sound Settings</DialogTitle>
-            <div className="p-6">
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Music</span>
-                  <Switch
-                    checked={!isMusicMuted}
-                    onCheckedChange={toggleMusicMute}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Click Sounds</span>
-                  <Switch
-                    checked={!isClickMuted}
-                    onCheckedChange={toggleClickMute}
-                  />
-                </div>
+            <div className="p-6 flex flex-col gap-4">
+              {/* Music Toggle */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Music</span>
+                <Switch
+                  checked={!isMusicMuted}
+                  onCheckedChange={toggleMusicMute}
+                />
+              </div>
+
+              {/* Music Volume */}
+              <div className="flex flex-col gap-2">
+                <span className="text-sm font-medium">Music Volume</span>
+                <Slider
+                  value={[musicVolume * 100]}
+                  max={100}
+                  step={1}
+                  onValueChange={(val) => setMusicVolume(val[0] / 100)}
+                />
+              </div>
+
+              {/* Click Sounds Toggle */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Click Sounds</span>
+                <Switch
+                  checked={!isClickMuted}
+                  onCheckedChange={toggleClickMute}
+                />
+              </div>
+
+              {/* Click Volume */}
+              <div className="flex flex-col gap-2">
+                <span className="text-sm font-medium">Click Volume</span>
+                <Slider
+                  value={[clickVolume * 100]}
+                  max={100}
+                  step={1}
+                  onValueChange={(val) => setClickVolume(val[0] / 100)}
+                />
               </div>
             </div>
           </DialogContent>

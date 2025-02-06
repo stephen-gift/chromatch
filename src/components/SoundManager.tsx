@@ -1,18 +1,32 @@
 "use client";
 import { useEffect } from "react";
 import { useSoundStore } from "../../store";
-import { playClickSound, backgroundMusic } from "@/lib/sound";
+import {
+  playClickSound,
+  backgroundMusic,
+  buttonClickSound,
+  successSound,
+  errorSound
+} from "@/lib/sound";
 
 const SoundManager = () => {
-  const { isClickMuted, isMusicMuted } = useSoundStore();
+  const { isClickMuted, isMusicMuted, clickVolume, musicVolume } =
+    useSoundStore();
 
   useEffect(() => {
+    backgroundMusic.volume(musicVolume);
     if (!isMusicMuted) {
       backgroundMusic.play();
     } else {
       backgroundMusic.pause();
     }
-  }, [isMusicMuted]);
+  }, [isMusicMuted, musicVolume]);
+
+  useEffect(() => {
+    buttonClickSound.volume(clickVolume);
+    successSound.volume(clickVolume);
+    errorSound.volume(clickVolume);
+  }, [clickVolume]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {

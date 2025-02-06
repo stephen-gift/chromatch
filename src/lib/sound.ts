@@ -32,14 +32,16 @@ export const errorSound = new Howl({
 });
 
 export const playClickSound = () => {
-  const { isClickMuted } = useSoundStore.getState();
+  const { isClickMuted, clickVolume } = useSoundStore.getState();
   if (!isClickMuted) {
+    buttonClickSound.volume(clickVolume);
     buttonClickSound.play();
   }
 };
 
 export const playBackgroundMusic = () => {
-  const { isMusicMuted } = useSoundStore.getState();
+  const { isMusicMuted, musicVolume } = useSoundStore.getState();
+  backgroundMusic.volume(musicVolume);
   if (!isMusicMuted) {
     backgroundMusic.play();
   } else {
@@ -48,15 +50,17 @@ export const playBackgroundMusic = () => {
 };
 
 export const playSuccessSound = () => {
-  const { isClickMuted } = useSoundStore.getState();
+  const { isClickMuted, clickVolume } = useSoundStore.getState();
   if (!isClickMuted) {
+    successSound.volume(clickVolume);
     successSound.play();
   }
 };
 
 export const playErrorSound = () => {
-  const { isClickMuted } = useSoundStore.getState();
+  const { isClickMuted, clickVolume } = useSoundStore.getState();
   if (!isClickMuted) {
+    errorSound.volume(clickVolume);
     errorSound.play();
   }
 };
