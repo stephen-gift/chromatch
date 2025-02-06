@@ -9,7 +9,16 @@ export const buttonClickSound = new Howl({
 export const backgroundMusic = new Howl({
   src: ["/sounds/background-music.mp3"],
   loop: true,
-  volume: 0.4
+  volume: 0.4,
+  onload: () => {
+    console.log("Background music loaded");
+  },
+  onloaderror: (id, error) => {
+    console.error("Background music load error:", error);
+  },
+  onplayerror: (id, error) => {
+    console.error("Background music play error:", error);
+  }
 });
 
 export const playClickSound = () => {

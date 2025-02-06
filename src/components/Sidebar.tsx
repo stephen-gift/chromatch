@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { Avatar, AvatarFallback } from "../components/ui/avatar";
 import useColorGameStore, { useSoundStore } from "../../store";
@@ -48,6 +48,7 @@ const linkVariants = {
 };
 
 const Sidebar = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const { attempts, maxAttempts, score, game, session } = useColorGameStore();
   const { isMusicMuted, isClickMuted, toggleMusicMute, toggleClickMute } =
@@ -69,6 +70,8 @@ const Sidebar = () => {
           initial="initial"
           animate="animate"
           transition={sectionVariants.transition}
+          role="button"
+          onClick={() => router.push("/")}
         >
           <Image src={"/icons/logo.svg"} alt="logo" height={37} width={37} />
           <h1 className="text-2xl font-semibold text-blue-900 max-md:hidden">
