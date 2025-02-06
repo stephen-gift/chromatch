@@ -44,9 +44,9 @@ const Header = () => {
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <Button onClick={() => router.push("/how-to-play")}>
-            <HelpCircle />
-          </Button>
+
+            <HelpCircle onClick={() => router.push("/how-to-play")} />
+    
         </motion.div>
       </div>
     </motion.header>
