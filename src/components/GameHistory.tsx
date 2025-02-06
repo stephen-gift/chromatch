@@ -61,7 +61,7 @@ const GameHistory = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex justify-between items-center p-4 w-full">
+        <div className="flex justify-between items-center w-full">
           <h2 className="text-lg font-semibold sm:text-xl">Game History</h2>
           {history.length > 0 && (
             <ClearButtonWithConfirmation clearStore={clearStore} />

@@ -9,19 +9,23 @@ interface ColorOptionButtonProps {
   onClick: (color: string) => void;
   disabled?: boolean;
   className?: string;
+  isBlinking?: boolean;
 }
 
 const ColorOptionButton = ({
   color,
   onClick,
   disabled,
-  className
+  className,
+  isBlinking
 }: ColorOptionButtonProps) => {
-  
   return (
     <motion.div
-      className={cn(`
-        w-16 h-16 rounded-full shadow-md flex items-center justify-center relative overflow-hidden ${className}`)}
+      className={cn(
+        `
+        w-16 h-16 rounded-full shadow-md flex items-center justify-center relative overflow-hidden ${className}`,
+        { blinking: isBlinking }
+      )}
       whileHover={{ scale: 1.1 }}
       transition={{ duration: 0.3 }}
     >

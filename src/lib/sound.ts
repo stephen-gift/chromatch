@@ -3,7 +3,7 @@ import { useSoundStore } from "../../store";
 
 export const buttonClickSound = new Howl({
   src: ["/sounds/button-click.mp3"],
-  volume: 0.5
+  volume: 0.3
 });
 
 export const backgroundMusic = new Howl({
@@ -21,6 +21,16 @@ export const backgroundMusic = new Howl({
   }
 });
 
+export const successSound = new Howl({
+  src: ["/sounds/success.wav"],
+  volume: 0.2
+});
+
+export const errorSound = new Howl({
+  src: ["/sounds/error.wav"],
+  volume: 0.2
+});
+
 export const playClickSound = () => {
   const { isClickMuted } = useSoundStore.getState();
   if (!isClickMuted) {
@@ -34,6 +44,20 @@ export const playBackgroundMusic = () => {
     backgroundMusic.play();
   } else {
     backgroundMusic.pause();
+  }
+};
+
+export const playSuccessSound = () => {
+  const { isClickMuted } = useSoundStore.getState();
+  if (!isClickMuted) {
+    successSound.play();
+  }
+};
+
+export const playErrorSound = () => {
+  const { isClickMuted } = useSoundStore.getState();
+  if (!isClickMuted) {
+    errorSound.play();
   }
 };
 

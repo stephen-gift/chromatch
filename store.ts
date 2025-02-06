@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { toast } from "sonner";
+import { playErrorSound, playSuccessSound } from "@/lib/sound";
 
 interface GameSession {
   session: number;
@@ -26,6 +27,11 @@ interface ColorGameState {
   history: GameHistory[];
   maxAttempts: number;
   showConfetti: boolean;
+  showHint: boolean;
+  hintUsedInSession: number;
+  setShowHint: (show: boolean) => void;
+  setHintUsedInSession: (session: number) => void;
+  activateHint: () => void;
   setShowConfetti: (show: boolean) => void;
   setTargetColor: (color: string) => void;
   setScore: (score: number) => void;
@@ -119,6 +125,8 @@ const useColorGameStore = create<ColorGameState>()(
       history: [],
       maxAttempts: 4,
       showConfetti: false,
+      showHint: false,
+      hintUsedInSession: 0,
 
       setShowConfetti: (show) => set({ showConfetti: show }),
       setTargetColor: (color) => set({ targetColor: color }),
@@ -142,6 +150,7 @@ const useColorGameStore = create<ColorGameState>()(
             showConfetti: true,
             gameStatus: getRandomMessage(correctGuessMessages)
           });
+          playSuccessSound();
           get().updateHistory(true, newAttempts);
           toast.success(
             "Correct! You guessed the right color! Let's start a new session...",
@@ -177,6 +186,7 @@ const useColorGameStore = create<ColorGameState>()(
               targetColor
             )
           });
+          playErrorSound();
           toast.error("Out of attempts! Starting a new session...", {
             duration: 5000,
             position: "top-right",
@@ -281,6 +291,7 @@ const useColorGameStore = create<ColorGameState>()(
           gameStatus: getRandomMessage(startMessages),
           isRevealed: false,
           attempts: [],
+          hintUsedInSession: 0,
 
           history: [...state.history]
         }));
@@ -397,6 +408,45 @@ const useColorGameStore = create<ColorGameState>()(
             closeButton: "text-white hover:text-gray-300"
           }
         });
+      },
+      setShowHint: (show) => set({ showHint: show }),
+      setHintUsedInSession: (session) => set({ hintUsedInSession: session }),
+
+      activateHint: () => {
+        const { session, hintUsedInSession } = get();
+
+        const nextAvailableSession = hintUsedInSession + 3;
+
+        if (session - hintUsedInSession >= 3) {
+          set({ showHint: true, hintUsedInSession: session });
+
+          setTimeout(() => {
+            set({ showHint: false });
+          }, 2000);
+        } else {
+          toast.warning(
+            `Hint can only be used once every 2 sessions! Next available in session ${nextAvailableSession}.`,
+            {
+              duration: 4000,
+              position: "top-right",
+              dismissible: true,
+              style: {
+                background: "#F59E0B",
+                color: "#FFF",
+                borderRadius: "8px",
+                padding: "16px",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+              },
+              classNames: {
+                toast:
+                  "bg-yellow-500 text-white font-semibold px-4 py-3 rounded-lg shadow-lg",
+                title: "text-lg font-bold",
+                description: "text-sm text-gray-100",
+                closeButton: "text-white hover:text-gray-300"
+              }
+            }
+          );
+        }
       }
     }),
     {

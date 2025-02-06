@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 
 import dynamic from "next/dynamic";
 import { Check, CrossIcon, Lightbulb, RedoDot } from "lucide-react";
+import { Button } from "./ui/button";
 
 const ColorOptionButton = dynamic(() => import("./ColorOptionButton"), {
   ssr: false
@@ -24,7 +25,9 @@ const ColorGame = () => {
     showConfetti,
     setShowConfetti,
     maxAttempts,
-    handleGuess
+    handleGuess,
+    activateHint,
+    showHint
   } = useColorGameStore();
 
   const { width, height } = useWindowSize();
@@ -206,10 +209,19 @@ const ColorGame = () => {
                 onClick={() => handleGuess(color)}
                 disabled={isOutOfAttempts}
                 className="border border-gray-500 hover:border-gray-700 transition"
+                isBlinking={showHint && color === targetColor}
               />
             </motion.div>
           ))}
         </div>
+
+        <Button
+          onClick={() => activateHint()}
+          // disabled={session - hintUsedInSession < 2}
+          className="mt-4"
+        >
+          Use Hint
+        </Button>
       </div>
     </motion.div>
   );
